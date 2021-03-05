@@ -1,0 +1,12 @@
+--- clinkc/Makefile.am.orig	2010-02-23 17:26:21.000000000 +0100
++++ clinkc/Makefile.am	2021-03-04 21:43:18.688802614 +0100
+@@ -26,8 +26,7 @@
+ 	Doxyfile
+ 
+ nobase_devdocs_DATA = \
+-	doxygen/html/* \
+-	doxygen-objc/html/*
++	doxygen/html/*
+ 
+ doxygen/html/*:
+ 	cd $(srcdir) && doxygen Doxyfile
