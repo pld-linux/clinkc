@@ -109,3 +109,51 @@
  upnpigddump_LDADD = ../../../lib/unix/libclinkc.a @XML_LIBS@
 -#endif
 +endif
+--- mupnp-2.4.1/std/av/configure.ac.orig	2015-02-05 12:07:59.000000000 +0100
++++ mupnp-2.4.1/std/av/configure.ac	2021-03-07 20:01:33.618218121 +0100
+@@ -33,7 +33,7 @@
+ #AC_LANG_CPLUSPLUS
+ AC_PROG_INSTALL
+ AC_PROG_AWK
+-#AC_PROG_LIBTOOL
++AC_PROG_LIBTOOL
+ AC_PROG_RANLIB
+ AM_PROG_CC_C_O
+ 
+--- mupnp-2.4.1/std/av/lib/unix/Makefile.am.orig	2015-02-05 12:07:59.000000000 +0100
++++ mupnp-2.4.1/std/av/lib/unix/Makefile.am	2021-03-07 20:02:15.231326017 +0100
+@@ -1,8 +1,8 @@
+-#if HAVE_LIBTOOL
+-#lib_LTLIBRARIES = libclinkcav.la
+-#else
++if HAVE_LIBTOOL
++lib_LTLIBRARIES = libclinkcav.la
++else
+ lib_LIBRARIES = libclinkcav.a
+-#endif
++endif
+ 
+ AM_CPPFLAGS = -I$(top_srcdir)/include
+ 
+@@ -35,14 +35,14 @@
+ nobase_libclinkcavinclude_HEADERS =  \
+         $(clinkcav_header)
+ 
+-#if HAVE_LIBTOOL
+-#libclinkcav_la_SOURCES = \
+-#        $(clinkcav_source)
+-#libclinkcav_a_CFLAGS = $(AM_CFLAGS)
+-#libclinkcav_la_LIBADD =
+-#else
++if HAVE_LIBTOOL
++libclinkcav_la_SOURCES = \
++        $(clinkcav_source)
++libclinkcav_a_CFLAGS = $(AM_CFLAGS)
++libclinkcav_la_LIBADD =
++else
+ libclinkcav_a_SOURCES = \
+         $(clinkcav_source)
+ libclinkcav_a_CFLAGS = $(AM_CFLAGS)
+ libclinkcav_a_LIBADD =
+-#endif
++endif

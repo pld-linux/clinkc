@@ -9,3 +9,14 @@
  AC_CONFIG_SRCDIR([include/cybergarage/typedef.h])
  AM_INIT_AUTOMAKE([subdir-objects])
  
+--- mupnp-2.4.1/std/av/configure.ac.orig	2021-03-07 20:01:33.618218121 +0100
++++ mupnp-2.4.1/std/av/configure.ac	2021-03-07 20:04:14.110681992 +0100
+@@ -14,7 +14,7 @@
+ 
+ AC_CONFIG_AUX_DIR(config)
+ AM_CONFIG_HEADER(config.h)
+-AC_INIT([clinkcav], [3.0])
++AC_INIT([clinkcav], [2.4.1])
+ AC_CONFIG_SRCDIR(include/cybergarage/upnp/std/av/cmediaserver.h)
+ AM_INIT_AUTOMAKE([subdir-objects])
+ 

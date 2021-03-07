@@ -1,0 +1,43 @@
+--- mupnp-2.4.1/std/av/configure.ac.orig	2021-03-07 20:04:14.110681992 +0100
++++ mupnp-2.4.1/std/av/configure.ac	2021-03-07 20:06:51.633161953 +0100
+@@ -80,7 +80,6 @@
+ ##############################
+ 
+ AC_CHECK_HEADERS([cybergarage/cupnp.h])
+-AC_CHECK_LIB([clinkc],[cg_upnp_controlpoint_new],,[AC_MSG_ERROR(CyberLink/AV needs CyberLink >= $CLINKC_VERSION)],[-lpthread -lexpat -lxml2])
+ 
+ ##############################
+ # Makefiles
+--- mupnp-2.4.1/std/av/lib/unix/Makefile.am.orig	2021-03-07 20:02:15.231326017 +0100
++++ mupnp-2.4.1/std/av/lib/unix/Makefile.am	2021-03-07 20:08:33.252611433 +0100
+@@ -39,7 +39,7 @@
+ libclinkcav_la_SOURCES = \
+         $(clinkcav_source)
+ libclinkcav_a_CFLAGS = $(AM_CFLAGS)
+-libclinkcav_la_LIBADD =
++libclinkcav_la_LIBADD = ../../../../lib/unix/libclinkc.la
+ else
+ libclinkcav_a_SOURCES = \
+         $(clinkcav_source)
+--- mupnp-2.4.1/std/av/sample/upnpavserver/filesystem/unix/Makefile.am.orig	2015-02-05 12:07:59.000000000 +0100
++++ mupnp-2.4.1/std/av/sample/upnpavserver/filesystem/unix/Makefile.am	2021-03-07 20:57:45.103286552 +0100
+@@ -14,7 +14,7 @@
+ 	../cdms_filesys_main.c
+ 
+ if HAVE_LIBTOOL
+-cdms_filesys_LDADD = -lclinkc ../../../../lib/unix/libclinkcav.la
++cdms_filesys_LDADD = ../../../../lib/unix/libclinkcav.la
+ else
+ cdms_filesys_LDADD = -lclinkc ../../../../lib/unix/libclinkcav.a
+ endif
+--- mupnp-2.4.1/std/av/sample/upnpavdump/unix/Makefile.am.orig	2015-02-05 12:07:59.000000000 +0100
++++ mupnp-2.4.1/std/av/sample/upnpavdump/unix/Makefile.am	2021-03-07 20:59:35.356022595 +0100
+@@ -10,7 +10,7 @@
+ 	../upnpavdump.c
+ 
+ if HAVE_LIBTOOL
+-upnpavdump_LDADD = -lclinkc ../../../lib/unix/libclinkcav.la
++upnpavdump_LDADD = ../../../lib/unix/libclinkcav.la
+ else
+ upnpavdump_LDADD = -lclinkc ../../../lib/unix/libclinkcav.a
+ endif

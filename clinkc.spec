@@ -19,8 +19,9 @@ Patch0:		%{name}-libtool.patch
 Patch1:		%{name}-iconv.patch
 Patch2:		%{name}-doc.patch
 Patch3:		%{name}-version.patch
+Patch4:		%{name}-av.patch
 URL:		https://sourceforge.net/projects/clinkc/
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	curl-devel >= 7.13.0
 BuildRequires:	doxygen
@@ -80,12 +81,50 @@ API documentation for clinkc library.
 %description apidocs -l pl.UTF-8
 Dokumentacja API biblioteki clinkc.
 
+%package av
+Summary:	CyberLink for C UPnP library - AV component
+Summary(pl.UTF-8):	Biblioteka UPnP CyberLink dla C - komponent AV
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description av
+CyberLink for C UPnP library - AV component.
+
+%description av -l pl.UTF-8
+Biblioteka UPnP CyberLink dla C - komponent AV.
+
+%package av-devel
+Summary:	Header files for clinkcav library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki clinkcav
+Group:		Development/Libraries
+Requires:	%{name}-av = %{version}-%{release}
+Requires:	%{name}-devel = %{version}-%{release}
+
+%description av-devel
+Header files for clinkcav library.
+
+%description av-devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki clinkcav.
+
+%package av-static
+Summary:	Static clinkcav library
+Summary(pl.UTF-8):	Statyczna biblioteka clinkcav
+Group:		Development/Libraries
+Requires:	%{name}-av-devel = %{version}-%{release}
+
+%description av-static
+Static clinkcav library.
+
+%description av-static -l pl.UTF-8
+Statyczna biblioteka clinkcav.
+
 %prep
 %setup -q -n mupnp-%{version}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %{__libtoolize}
@@ -97,14 +136,29 @@ Dokumentacja API biblioteki clinkc.
 	%{!?with_static_libs:--disable-static}
 %{__make}
 
+topdir=$(pwd)
+cd std/av
+%{__libtoolize}
+%{__aclocal}
+%{__autoconf}
+%{__autoheader}
+%{__automake}
+%configure \
+	CPPFLAGS="%{rpmcppflags} -I${topdir}/include" \
+	%{!?with_static_libs:--disable-static}
+%{__make}
+
 %install
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+%{__make} -C std/av install \
+	DESTDIR=$RPM_BUILD_ROOT
+	
 # obsoleted by pkg-config
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/libclinkc.la
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libclinkc*.la
 # compiled binaries
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}/clinkc-%{version}/samples
 # packaged as %doc
@@ -125,7 +179,19 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libclinkc.so
-%{_includedir}/cybergarage
+%dir %{_includedir}/cybergarage
+%{_includedir}/cybergarage/http
+%{_includedir}/cybergarage/io
+%{_includedir}/cybergarage/net
+%{_includedir}/cybergarage/soap
+%dir %{_includedir}/cybergarage/upnp
+%{_includedir}/cybergarage/upnp/control
+%{_includedir}/cybergarage/upnp/event
+%{_includedir}/cybergarage/upnp/ssdp
+%{_includedir}/cybergarage/upnp/*.h
+%{_includedir}/cybergarage/util
+%{_includedir}/cybergarage/xml
+%{_includedir}/cybergarage/typedef.h
 %{_pkgconfigdir}/clinkc.pc
 
 %if %{with static_libs}
@@ -138,4 +204,21 @@ rm -rf $RPM_BUILD_ROOT
 %files apidocs
 %defattr(644,root,root,755)
 %doc doxygen/html/*.{css,html,js,png}
+%endif
+
+%files av
+%defattr(644,root,root,755)
+%doc std/av/{COPYING,ChangeLog}
+%attr(755,root,root) %{_libdir}/libclinkcav.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libclinkcav.so.0
+
+%files av-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libclinkcav.so
+%{_includedir}/cybergarage/upnp/std
+
+%if %{with static_libs}
+%files av-static
+%defattr(644,root,root,755)
+%{_libdir}/libclinkcav.a
 %endif
