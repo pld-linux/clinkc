@@ -1,8 +1,8 @@
---- clinkc/configure.in.orig	2010-08-17 14:15:44.000000000 +0200
-+++ clinkc/configure.in	2021-03-04 20:48:30.769948133 +0100
+--- clinkc/configure.ac.orig	2010-08-17 14:15:44.000000000 +0200
++++ clinkc/configure.ac	2021-03-04 20:48:30.769948133 +0100
 @@ -62,7 +62,7 @@
  AC_PROG_CC
-+AC_LANG_CPLUSPLUS
++AC_PROG_CXX
  AC_PROG_INSTALL
  AC_PROG_AWK
 -#AC_PROG_LIBTOOL
@@ -10,9 +10,12 @@
  AC_PROG_RANLIB
 -AC_LANG_CPLUSPLUS
  AM_PROG_CC_C_O
---- clinkc/lib/unix/Makefile.am.orig	2010-02-02 15:50:42.000000000 +0100
-+++ clinkc/lib/unix/Makefile.am	2021-03-04 20:51:45.318894171 +0100
-@@ -1,8 +1,8 @@
+--- mupnp-2.4.1/lib/unix/Makefile.am.orig	2021-03-06 21:09:35.550291646 +0100
++++ mupnp-2.4.1/lib/unix/Makefile.am	2021-03-06 21:12:24.766041592 +0100
+@@ -6,11 +6,11 @@
+ #
+ ############################################################
+ 
 -#if HAVE_LIBTOOL
 -#lib_LTLIBRARIES = libclinkc.la
 -#else
@@ -23,11 +26,11 @@
 -#endif
 +endif
  
- INCLUDES = -I$(top_srcdir)/include -I$(top_builddir)/include @XML_CFLAGS@ @HTTP_CFLAGS@ @CLOG_DEBUG_FLAGS@
+ AM_CFLAGS = -I$(top_srcdir)/include -I$(top_builddir)/include @XML_CFLAGS@ @HTTP_CFLAGS@ @CLOG_DEBUG_FLAGS@
  
-@@ -112,13 +112,13 @@
+@@ -115,13 +115,13 @@
  nobase_libclinkcinclude_HEADERS =  \
-         $(clinkc_header)
+         $(clinkc_headers)
  
 -#if HAVE_LIBTOOL
 -#libclinkc_la_SOURCES = \
@@ -36,17 +39,18 @@
 -#else
 +if HAVE_LIBTOOL
 +libclinkc_la_SOURCES = \
-+        $(clinkc_source)
++        $(clinkc_sources)
 +libclinkc_la_LIBADD = @HTTP_LIBS@ @XML_LIBS@
 +else
  libclinkc_a_SOURCES = \
-         $(clinkc_source)
+         $(clinkc_sources)
  libclinkc_a_CFLAGS = $(AM_CFLAGS)
- libclinkc_a_LIBADD = @HTTP_LIBS@ @XML_LIBS@
+-#libclinkc_a_LIBADD = @HTTP_LIBS@ @XML_LIBS@
 -#endif
++libclinkc_a_LIBADD = @HTTP_LIBS@ @XML_LIBS@
 +endif
---- clinkc/sample/clock/unix/Makefile.am.orig	2010-02-02 15:50:42.000000000 +0100
-+++ clinkc/sample/clock/unix/Makefile.am	2021-03-04 20:52:39.021936570 +0100
+--- clinkc/examples/clock/unix/Makefile.am.orig	2010-02-02 15:50:42.000000000 +0100
++++ clinkc/examples/clock/unix/Makefile.am	2021-03-04 20:52:39.021936570 +0100
 @@ -15,8 +15,8 @@
  	../clock_device.c \
  	../../common/kb_util.c
@@ -60,8 +64,8 @@
  upnpclock_LDADD = ../../../lib/unix/libclinkc.a @XML_LIBS@
 -#endif
 +endif
---- clinkc/sample/upnpavdump/unix/Makefile.am.orig	2010-02-02 15:50:42.000000000 +0100
-+++ clinkc/sample/upnpavdump/unix/Makefile.am	2021-03-04 20:53:00.541819987 +0100
+--- clinkc/examples/upnpavdump/unix/Makefile.am.orig	2010-02-02 15:50:42.000000000 +0100
++++ clinkc/examples/upnpavdump/unix/Makefile.am	2021-03-04 20:53:00.541819987 +0100
 @@ -11,8 +11,8 @@
  	../upnpavdump.c \
  	../../common/kb_util.c
@@ -75,8 +79,8 @@
  upnpavdump_LDADD = ../../../lib/unix/libclinkc.a @XML_LIBS@
 -#endif
 +endif
---- clinkc/sample/upnpdump/unix/Makefile.am.orig	2010-02-02 15:50:42.000000000 +0100
-+++ clinkc/sample/upnpdump/unix/Makefile.am	2021-03-04 20:53:21.415040240 +0100
+--- clinkc/examples/upnpdump/unix/Makefile.am.orig	2010-02-02 15:50:42.000000000 +0100
++++ clinkc/examples/upnpdump/unix/Makefile.am	2021-03-04 20:53:21.415040240 +0100
 @@ -11,8 +11,8 @@
  	../upnpdump.c \
  	../../common/kb_util.c
@@ -90,8 +94,8 @@
  upnpdump_LDADD = ../../../lib/unix/libclinkc.a @XML_LIBS@
 -#endif
 +endif
---- clinkc/sample/upnpigddump/unix/Makefile.am.orig	2010-02-02 15:50:42.000000000 +0100
-+++ clinkc/sample/upnpigddump/unix/Makefile.am	2021-03-04 20:53:36.471625339 +0100
+--- clinkc/examples/upnpigddump/unix/Makefile.am.orig	2010-02-02 15:50:42.000000000 +0100
++++ clinkc/examples/upnpigddump/unix/Makefile.am	2021-03-04 20:53:36.471625339 +0100
 @@ -11,8 +11,8 @@
  	../upnpigddump.c \
  	../../common/kb_util.c

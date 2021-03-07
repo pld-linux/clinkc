@@ -1,3 +1,4 @@
+# note: for versions >= 3 (with changed library name) see mupnp.spec
 #
 # Conditional build:
 %bcond_without	static_libs	# static library
@@ -6,16 +7,18 @@
 Summary:	CyberLink for C UPnP library
 Summary(pl.UTF-8):	Biblioteka UPnP CyberLink dla C
 Name:		clinkc
-Version:	2.4.0
-%define	fver	%(echo %{version} | tr -d .)
+# keep 2.x here for libclinkc name
+Version:	2.4.1
 Release:	1
 License:	BSD
 Group:		Libraries
-Source0:	https://downloads.sourceforge.net/clinkc/%{name}%{fver}.tar.gz
-# Source0-md5:	d548ead428419b0e2e521f06cd7b2ddb
+#Source0Download: https://github.com/cybergarage/mupnp/releases
+Source0:	https://github.com/cybergarage/mupnp/archive/%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	622ba12704305091dbc5978d5a0a49df
 Patch0:		%{name}-libtool.patch
 Patch1:		%{name}-iconv.patch
 Patch2:		%{name}-doc.patch
+Patch3:		%{name}-version.patch
 URL:		https://sourceforge.net/projects/clinkc/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -78,10 +81,11 @@ API documentation for clinkc library.
 Dokumentacja API biblioteki clinkc.
 
 %prep
-%setup -q -n %{name}
+%setup -q -n mupnp-%{version}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %{__libtoolize}
@@ -102,7 +106,7 @@ rm -rf $RPM_BUILD_ROOT
 # obsoleted by pkg-config
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libclinkc.la
 # compiled binaries
-%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/clinkc-2.3
+%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/clinkc-%{version}/samples
 # packaged as %doc
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}/{clinkc-dev,clinkc0}
 

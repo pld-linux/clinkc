@@ -1,5 +1,5 @@
---- clinkc/configure.in.orig	2021-03-04 20:48:30.769948133 +0100
-+++ clinkc/configure.in	2021-03-04 20:57:39.143644005 +0100
+--- clinkc/configure.ac.orig	2021-03-04 20:48:30.769948133 +0100
++++ clinkc/configure.ac	2021-03-04 20:57:39.143644005 +0100
 @@ -393,7 +393,7 @@
  
  AC_CHECK_FUNCS([iconv])

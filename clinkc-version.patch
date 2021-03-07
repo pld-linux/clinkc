@@ -1,0 +1,11 @@
+--- mupnp-2.4.1/configure.ac.orig	2021-03-07 13:08:32.679134657 +0100
++++ mupnp-2.4.1/configure.ac	2021-03-07 13:18:48.275799684 +0100
+@@ -9,7 +9,7 @@
+ AC_CONFIG_AUX_DIR(config)
+ AM_CONFIG_HEADER(config.h)
+ 
+-AC_INIT([clinkc], [3.0])
++AC_INIT([clinkc], [2.4.1])
+ AC_CONFIG_SRCDIR([include/cybergarage/typedef.h])
+ AM_INIT_AUTOMAKE([subdir-objects])
+ 
