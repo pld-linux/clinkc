@@ -20,6 +20,7 @@ Patch1:		%{name}-iconv.patch
 Patch2:		%{name}-doc.patch
 Patch3:		%{name}-version.patch
 Patch4:		%{name}-av.patch
+Patch5:		%{name}-types.patch
 URL:		https://sourceforge.net/projects/clinkc/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -125,6 +126,7 @@ Statyczna biblioteka clinkcav.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 %{__libtoolize}

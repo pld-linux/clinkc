@@ -1,0 +1,11 @@
+--- mupnp-2.4.1/src/cybergarage/upnp/event/csubscription_request.c.orig	2015-02-05 12:07:59.000000000 +0100
++++ mupnp-2.4.1/src/cybergarage/upnp/event/csubscription_request.c	2021-03-10 21:56:44.378038774 +0100
+@@ -71,7 +71,7 @@
+ * cg_upnp_event_subscription_request_settimeout
+ ****************************************/
+ 
+-void cg_upnp_event_subscription_request_settimeout(CgUpnpSubscriptionRequest *subReq, long timeout)
++void cg_upnp_event_subscription_request_settimeout(CgUpnpSubscriptionRequest *subReq, CgTime timeout)
+ {
+ 	CgString *timeoutBuf;
+ 
