@@ -9,7 +9,7 @@ Summary(pl.UTF-8):	Biblioteka UPnP CyberLink dla C
 Name:		clinkc
 # keep 2.x here for libclinkc name
 Version:	2.4.1
-Release:	1
+Release:	2
 License:	BSD
 Group:		Libraries
 #Source0Download: https://github.com/cybergarage/mupnp/releases
